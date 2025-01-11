@@ -5,7 +5,6 @@ const words = [
 ];
 const gridSize = 15;
 
-let isSelecting = false;
 let selectedCells = [];
 let gridLetters = []; // Store the grid for validation
 
@@ -79,31 +78,29 @@ function displayGrid(grid) {
             cellElement.dataset.col = colIndex;
 
             // Add event listeners for highlighting
-            cellElement.addEventListener('mousedown', () => handleCellSelectionStart(cellElement));
-            cellElement.addEventListener('mouseover', () => handleCellSelection(cellElement));
+            cellElement.addEventListener('click', () => handleCellClick(cellElement));
             container.appendChild(cellElement);
         });
     });
-
-    document.addEventListener('mouseup', handleCellSelectionEnd);
 }
 
-function handleCellSelectionStart(cell) {
-    isSelecting = true;
-    selectedCells = [cell];
-    cell.classList.add('selected');
-}
+function handleCellClick(cell) {
+    const row = cell.dataset.row;
+    const col = cell.dataset.col;
 
-function handleCellSelection(cell) {
-    if (isSelecting && !selectedCells.includes(cell)) {
+    // Mark the cell as selected or unselected on click
+    if (!selectedCells.includes(cell)) {
         selectedCells.push(cell);
         cell.classList.add('selected');
+    } else {
+        // If already selected, remove the cell from the selected list
+        selectedCells = selectedCells.filter(selectedCell => selectedCell !== cell);
+        cell.classList.remove('selected');
     }
 }
 
 function handleCellSelectionEnd() {
-    if (!isSelecting) return;
-    isSelecting = false;
+    if (selectedCells.length === 0) return;
 
     // Get the word formed by the selected cells
     const selectedWord = selectedCells.map(cell => cell.textContent).join('');
@@ -163,3 +160,16 @@ function displayWordList() {
         wordListContainer.appendChild(li);
     });
 }
+
+// Select all the list items in the word list
+const wordListItems = document.querySelectorAll('#words-to-find li');
+
+// Add an event listener to each word box
+wordListItems.forEach(item => {
+    item.addEventListener('click', () => {
+        // Toggle the "clicked" class to change the background color
+        item.classList.toggle('clicked');
+    });
+});
+
+// Your existing JavaScript code for generating the crossword and handling interactions...
