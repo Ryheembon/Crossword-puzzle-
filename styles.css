@@ -12,16 +12,17 @@ h1 {
 
 #crossword-container {
     display: grid;
-    grid-template-columns: repeat(15, 30px);
-    grid-template-rows: repeat(15, 30px);
+    grid-template-columns: repeat(15, 6.5%); /* Flexible column size */
+    grid-template-rows: repeat(15, 6.5%); /* Flexible row size */
     gap: 2px;
     margin: 20px auto;
     justify-content: center;
+    max-width: 100%;
 }
 
 .grid-cell {
-    width: 30px;
-    height: 30px;
+    min-width: 30px; /* Ensures minimum clickable size */
+    min-height: 30px; /* Ensures minimum clickable size */
     text-align: center;
     vertical-align: middle;
     border: 1px solid #ccc;
@@ -76,14 +77,15 @@ button:hover {
     margin: 5px 0;
     font-size: 18px;
 }
+
 @media screen and (max-width: 480px) {
     h1 {
         font-size: 1.2rem;
     }
-}
+
     #crossword-container {
-        grid-template-columns: repeat(15, 15px);
-        grid-template-rows: repeat(15, 15px);
+        grid-template-columns: repeat(15, 5vw); /* Flexible column size */
+        grid-template-rows: repeat(15, 5vw); /* Flexible row size */
         gap: 1px;
     }
-  
+}
