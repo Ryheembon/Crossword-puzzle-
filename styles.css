@@ -76,3 +76,13 @@ button:hover {
     margin: 5px 0;
     font-size: 18px;
 }
+@media screen and (max-width: 480px) {
+    h1 {
+        font-size: 1.2rem;
+    }
+
+    #crossword-container {
+        grid-template-columns: repeat(15, 15px);
+        grid-template-rows: repeat(15, 15px);
+        gap: 1px;
+    }
