@@ -1,6 +1,15 @@
-.body {
+body {
     background-color: gray;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    color: blue;
 }
+
+h1 {
+    margin-top: 20px;
+    font-size: 2rem;
+}
+
 #crossword-container {
     display: grid;
     grid-template-columns: repeat(15, 30px);
@@ -16,14 +25,25 @@
     text-align: center;
     vertical-align: middle;
     border: 1px solid #ccc;
-    font-family: Arial, sans-serif;
     font-size: 18px;
+    font-weight: bold;
     background-color: #f0f0f0;
+    cursor: pointer;
 }
 
 .grid-cell.filled {
-    background-color: #ffffff;
-    font-weight: bold;
+    background-color: white;
+    color: black;
+}
+
+.grid-cell.selected {
+    background-color: yellow;
+    color: black;
+}
+
+.grid-cell.found {
+    background-color: green;
+    color: white;
 }
 
 button {
@@ -31,7 +51,6 @@ button {
     font-size: 16px;
     cursor: pointer;
     margin: 20px;
-    display: block;
     background-color: #4CAF50;
     color: white;
     border: none;
@@ -41,4 +60,19 @@ button {
 
 button:hover {
     background-color: #45a049;
+}
+
+#word-list {
+    margin-top: 20px;
+}
+
+#words-to-find {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+}
+
+#words-to-find li {
+    margin: 5px 0;
+    font-size: 18px;
 }
