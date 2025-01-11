@@ -12,21 +12,22 @@ h1 {
 
 #crossword-container {
     display: grid;
-    grid-template-columns: repeat(15, 6.5%); /* Flexible column size */
-    grid-template-rows: repeat(15, 6.5%); /* Flexible row size */
+    grid-template-columns: repeat(15, 1fr); /* Use flexible columns */
+    grid-template-rows: repeat(15, 1fr); /* Use flexible rows */
     gap: 2px;
     margin: 20px auto;
     justify-content: center;
     max-width: 100%;
+    width: 90%; /* Ensure the container scales properly */
 }
 
 .grid-cell {
-    min-width: 30px; /* Ensures minimum clickable size */
-    min-height: 30px; /* Ensures minimum clickable size */
+    min-width: 40px; /* Ensure cells have enough space */
+    min-height: 40px; /* Make cells larger for better readability */
     text-align: center;
     vertical-align: middle;
     border: 1px solid #ccc;
-    font-size: 18px;
+    font-size: 20px; /* Larger font size for readability */
     font-weight: bold;
     background-color: #f0f0f0;
     cursor: pointer;
@@ -78,14 +79,21 @@ button:hover {
     font-size: 18px;
 }
 
+/* Mobile adjustments */
 @media screen and (max-width: 480px) {
     h1 {
-        font-size: 1.2rem;
+        font-size: 1.5rem; /* Slightly smaller title */
     }
 
     #crossword-container {
-        grid-template-columns: repeat(15, 5vw); /* Flexible column size */
-        grid-template-rows: repeat(15, 5vw); /* Flexible row size */
+        grid-template-columns: repeat(15, 6vw); /* Use viewport width for scaling */
+        grid-template-rows: repeat(15, 6vw); /* Keep row size proportional */
         gap: 1px;
+    }
+
+    .grid-cell {
+        font-size: 16px; /* Adjust font size for better mobile readability */
+        min-width: 30px; /* Make sure the cells aren't too small */
+        min-height: 30px;
     }
 }
