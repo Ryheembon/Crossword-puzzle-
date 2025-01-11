@@ -1,0 +1,44 @@
+.body {
+    background-color: gray;
+}
+#crossword-container {
+    display: grid;
+    grid-template-columns: repeat(15, 30px);
+    grid-template-rows: repeat(15, 30px);
+    gap: 2px;
+    margin: 20px auto;
+    justify-content: center;
+}
+
+.grid-cell {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid #ccc;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    background-color: #f0f0f0;
+}
+
+.grid-cell.filled {
+    background-color: #ffffff;
+    font-weight: bold;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 20px;
+    display: block;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+}
+
+button:hover {
+    background-color: #45a049;
+}
