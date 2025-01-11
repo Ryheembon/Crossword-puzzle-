@@ -71,40 +71,88 @@ button:hover {
     list-style: none;
     padding: 0;
     text-align: center;
+    display: flex;
+    flex-wrap: wrap; /* Allows word boxes to wrap */
+    justify-content: center;
+    gap: 5px; /* Space between word boxes */
+    margin-bottom: 20px; /* Space between word list and crossword grid */
 }
 
 #words-to-find li {
-    margin: 5px 0;
-    font-size: 18px;
+    background-color: #f0f0f0;
+    padding: 5px 10px; /* Smaller padding for smaller word boxes */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px; /* Smaller font size */
+    font-weight: bold;
+    display: inline-block;
+    cursor: pointer; /* Indicate that these are clickable */
+    transition: background-color 0.3s ease; /* Smooth transition for background change */
 }
 
+#words-to-find li.clicked {
+    background-color: #4CAF50; /* Green background when clicked */
+    color: white;
+}
+
+/* Grid styling */
+#crossword-container {
+    display: grid;
+    grid-template-columns: repeat(15, 30px); /* Cells are 30px in width */
+    grid-template-rows: repeat(15, 30px); /* Cells are 30px in height */
+    gap: 2px;
+    margin: 20px auto;
+    justify-content: center;
+    max-width: 100%;
+}
+
+.grid-cell {
+    min-width: 30px;
+    min-height: 30px;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid #ccc;
+    font-size: 16px; /* Slightly smaller font size for the crossword grid */
+    font-weight: bold;
+    background-color: #f0f0f0;
+    cursor: pointer;
+}
+
+.grid-cell.filled {
+    background-color: white;
+    color: black;
+}
+
+.grid-cell.selected {
+    background-color: yellow;
+    color: black;
+}
+
+.grid-cell.found {
+    background-color: green;
+    color: white;
+}
+
+/* Style for the crossword container on smaller screens */
 @media screen and (max-width: 480px) {
     h1 {
         font-size: 1.2rem;
     }
 
     #crossword-container {
-        grid-template-columns: repeat(15, 5vw); /* Flexible column size */
-        grid-template-rows: repeat(15, 5vw); /* Flexible row size */
+        grid-template-columns: repeat(15, 5vw); /* Use viewport width for scaling */
+        grid-template-rows: repeat(15, 5vw); /* Keep row size proportional */
         gap: 1px;
     }
-}
-#words-to-find {
-    list-style: none;
-    padding: 0;
-    text-align: center;
-    display: flex; /* Use flexbox for horizontal alignment */
-    flex-wrap: wrap; /* Allow wrapping of items if they overflow */
-    justify-content: center; /* Center the words horizontally */
-    gap: 10px; /* Space between words */
-}
 
-#words-to-find li {
-    background-color: #f0f0f0;
-    padding: 10px 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 18px;
-    font-weight: bold;
-    display: inline-block; /* Ensures words are displayed in a box */
+    .grid-cell {
+        font-size: 12px; /* Smaller font size for mobile */
+        min-width: 20px; /* Smaller minimum width */
+        min-height: 20px; /* Smaller minimum height */
+    }
+
+    #words-to-find li {
+        font-size: 12px; /* Smaller font size for mobile */
+        padding: 3px 6px; /* Smaller padding for mobile */
+    }
 }
