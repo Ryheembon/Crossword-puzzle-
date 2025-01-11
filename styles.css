@@ -12,22 +12,21 @@ h1 {
 
 #crossword-container {
     display: grid;
-    grid-template-columns: repeat(15, 1fr); /* Use flexible columns */
-    grid-template-rows: repeat(15, 1fr); /* Use flexible rows */
+    grid-template-columns: repeat(15, 6.5%); /* Flexible column size */
+    grid-template-rows: repeat(15, 6.5%); /* Flexible row size */
     gap: 2px;
     margin: 20px auto;
     justify-content: center;
     max-width: 100%;
-    width: 90%; /* Ensure the container scales properly */
 }
 
 .grid-cell {
-    min-width: 40px; /* Ensure cells have enough space */
-    min-height: 40px; /* Make cells larger for better readability */
+    min-width: 30px; /* Ensures minimum clickable size */
+    min-height: 30px; /* Ensures minimum clickable size */
     text-align: center;
     vertical-align: middle;
     border: 1px solid #ccc;
-    font-size: 20px; /* Larger font size for readability */
+    font-size: 18px;
     font-weight: bold;
     background-color: #f0f0f0;
     cursor: pointer;
@@ -79,21 +78,33 @@ button:hover {
     font-size: 18px;
 }
 
-/* Mobile adjustments */
 @media screen and (max-width: 480px) {
     h1 {
-        font-size: 1.5rem; /* Slightly smaller title */
+        font-size: 1.2rem;
     }
 
     #crossword-container {
-        grid-template-columns: repeat(15, 6vw); /* Use viewport width for scaling */
-        grid-template-rows: repeat(15, 6vw); /* Keep row size proportional */
+        grid-template-columns: repeat(15, 5vw); /* Flexible column size */
+        grid-template-rows: repeat(15, 5vw); /* Flexible row size */
         gap: 1px;
     }
+}
+#words-to-find {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+    display: flex; /* Use flexbox for horizontal alignment */
+    flex-wrap: wrap; /* Allow wrapping of items if they overflow */
+    justify-content: center; /* Center the words horizontally */
+    gap: 10px; /* Space between words */
+}
 
-    .grid-cell {
-        font-size: 16px; /* Adjust font size for better mobile readability */
-        min-width: 30px; /* Make sure the cells aren't too small */
-        min-height: 30px;
-    }
+#words-to-find li {
+    background-color: #f0f0f0;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: bold;
+    display: inline-block; /* Ensures words are displayed in a box */
 }
