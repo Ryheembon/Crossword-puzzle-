@@ -5,12 +5,16 @@ const words = [
 ];
 const gridSize = 15;
 
+let isSelecting = false;
+let selectedCells = [];
+let gridLetters = []; // Store the grid for validation
+
 function createEmptyGrid() {
     const grid = [];
     for (let i = 0; i < gridSize; i++) {
         const row = [];
         for (let j = 0; j < gridSize; j++) {
-            row.push('-');  // Empty cell
+            row.push('-'); // Empty cell
         }
         grid.push(row);
     }
@@ -59,6 +63,72 @@ function fillRandomLetters(grid) {
     }
 }
 
+function displayGrid(grid) {
+    const container = document.getElementById('crossword-container');
+    container.innerHTML = ''; // Clear the container
+    gridLetters = grid; // Save the grid for reference
+
+    grid.forEach((row, rowIndex) => {
+        row.forEach((cell, colIndex) => {
+            const cellElement = document.createElement('div');
+            cellElement.classList.add('grid-cell');
+            cellElement.textContent = cell === '-' ? '' : cell;
+
+            // Add data attributes
+            cellElement.dataset.row = rowIndex;
+            cellElement.dataset.col = colIndex;
+
+            // Add event listeners for highlighting
+            cellElement.addEventListener('mousedown', () => handleCellSelectionStart(cellElement));
+            cellElement.addEventListener('mouseover', () => handleCellSelection(cellElement));
+            container.appendChild(cellElement);
+        });
+    });
+
+    document.addEventListener('mouseup', handleCellSelectionEnd);
+}
+
+function handleCellSelectionStart(cell) {
+    isSelecting = true;
+    selectedCells = [cell];
+    cell.classList.add('selected');
+}
+
+function handleCellSelection(cell) {
+    if (isSelecting && !selectedCells.includes(cell)) {
+        selectedCells.push(cell);
+        cell.classList.add('selected');
+    }
+}
+
+function handleCellSelectionEnd() {
+    if (!isSelecting) return;
+    isSelecting = false;
+
+    // Get the word formed by the selected cells
+    const selectedWord = selectedCells.map(cell => cell.textContent).join('');
+
+    if (words.includes(selectedWord)) {
+        alert(`You found the word: ${selectedWord}!`);
+        selectedCells.forEach(cell => cell.classList.add('found'));
+        markWordAsFound(selectedWord);
+    } else {
+        selectedCells.forEach(cell => cell.classList.remove('selected'));
+    }
+
+    selectedCells = [];
+}
+
+function markWordAsFound(word) {
+    const wordElements = document.querySelectorAll('#words-to-find li');
+    wordElements.forEach(li => {
+        if (li.textContent === word) {
+            li.style.textDecoration = 'line-through';
+            li.style.color = 'lightgray';
+        }
+    });
+}
+
 function generateGrid() {
     let grid = createEmptyGrid();
 
@@ -76,26 +146,20 @@ function generateGrid() {
         }
     });
 
-    // Fill remaining empty cells with random letters
+    // Fill remaining empty cells
     fillRandomLetters(grid);
 
-    // Display the grid
+    // Display the grid and word list
     displayGrid(grid);
+    displayWordList();
 }
 
-function displayGrid(grid) {
-    const container = document.getElementById('crossword-container');
-    container.innerHTML = '';  // Clear the container
-
-    grid.forEach((row, rowIndex) => {
-        row.forEach((cell, colIndex) => {
-            const cellElement = document.createElement('div');
-            cellElement.classList.add('grid-cell');
-            cellElement.textContent = cell === '-' ? '' : cell;
-            if (cell !== '-') {
-                cellElement.classList.add('filled');
-            }
-            container.appendChild(cellElement);
-        });
+function displayWordList() {
+    const wordListContainer = document.getElementById('words-to-find');
+    wordListContainer.innerHTML = '';
+    words.forEach(word => {
+        const li = document.createElement('li');
+        li.textContent = word;
+        wordListContainer.appendChild(li);
     });
 }
