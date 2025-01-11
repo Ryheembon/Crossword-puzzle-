@@ -77,7 +77,7 @@ function displayGrid(grid) {
             cellElement.dataset.row = rowIndex;
             cellElement.dataset.col = colIndex;
 
-            // Add event listeners for highlighting
+            // Add event listeners for clicking
             cellElement.addEventListener('click', () => handleCellClick(cellElement));
             container.appendChild(cellElement);
         });
@@ -85,8 +85,8 @@ function displayGrid(grid) {
 }
 
 function handleCellClick(cell) {
-    const row = cell.dataset.row;
-    const col = cell.dataset.col;
+    const row = parseInt(cell.dataset.row);
+    const col = parseInt(cell.dataset.col);
 
     // Mark the cell as selected or unselected on click
     if (!selectedCells.includes(cell)) {
@@ -99,20 +99,24 @@ function handleCellClick(cell) {
     }
 }
 
+// New function for completing word validation when user is done selecting.
 function handleCellSelectionEnd() {
     if (selectedCells.length === 0) return;
 
     // Get the word formed by the selected cells
     const selectedWord = selectedCells.map(cell => cell.textContent).join('');
 
+    // Check if the word exists in the list
     if (words.includes(selectedWord)) {
         alert(`You found the word: ${selectedWord}!`);
         selectedCells.forEach(cell => cell.classList.add('found'));
         markWordAsFound(selectedWord);
     } else {
-        selectedCells.forEach(cell => cell.classList.remove('selected'));
+        alert(`Sorry, "${selectedWord}" is not a valid word.`);
+        selectedCells.forEach(cell => cell.classList.remove('selected')); // Remove selection from invalid word
     }
 
+    // Clear the selected cells array after checking
     selectedCells = [];
 }
 
@@ -161,10 +165,8 @@ function displayWordList() {
     });
 }
 
-// Select all the list items in the word list
+// Add event listener to each word box
 const wordListItems = document.querySelectorAll('#words-to-find li');
-
-// Add an event listener to each word box
 wordListItems.forEach(item => {
     item.addEventListener('click', () => {
         // Toggle the "clicked" class to change the background color
@@ -172,4 +174,5 @@ wordListItems.forEach(item => {
     });
 });
 
-// Your existing JavaScript code for generating the crossword and handling interactions...
+// Add the "Done" button functionality
+document.getElementById('done-button').addEventListener('click', handleCellSelectionEnd);
